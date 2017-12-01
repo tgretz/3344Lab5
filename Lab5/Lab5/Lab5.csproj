@@ -79,6 +79,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Car.cs" />
     <Compile Include="CarService.asmx.cs">
       <DependentUpon>CarService.asmx</DependentUpon>
       <SubType>Component</SubType>
