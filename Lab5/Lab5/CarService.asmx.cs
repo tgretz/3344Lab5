@@ -22,26 +22,6 @@ namespace Lab5
     public class CarService : System.Web.Services.WebService
     {
 
-        [WebMethod]
-        public TV GetTV(string theShow)
-        {
-            DBConnect objDB = new DBConnect();
-            TV tv = new Lab5.TV();
-
-            string strSQL = "SELECT * FROM TV WHERE Name = '" + theShow + "'";
-            int recordCount = 0;
-
-            objDB.GetDataSet(strSQL, out recordCount);
-
-            if (recordCount > 0)
-            {
-                tv.name = objDB.GetField("Name", 0).ToString();
-                tv.genre = objDB.GetField("Genre", 0).ToString();
-                tv.seasons = objDB.GetField("Seasons", 0).ToString();
-            }
-
-            return tv;
-        }
 
         //Web Method to store a Car obj in the database
         //Accepts a Car Object using JSON
@@ -90,5 +70,61 @@ namespace Lab5
 
             return carObj;
         }
+
+        //Web Method to get all cars by type
+        //returns list of Car Objs that contain all the information returned from the Query
+        [WebMethod]
+        public List<Car> GetCarsByType(string Type)
+        {
+            DBConnect objDB = new DBConnect();
+            List<Car> carList = new List<Car>();
+            //Car carObj = new Car();
+            string strSQL = "SELECT * FROM Car WHERE Type = '" + Type + "'";
+            int recordCount = 0;
+
+            objDB.GetDataSet(strSQL, out recordCount);
+
+            for (int i = 0; i < recordCount; i++)
+            {
+                Car carObj = new Car();
+                carObj.VIN = objDB.GetField("VIN", i).ToString();
+                carObj.make = objDB.GetField("Make", i).ToString();
+                carObj.model = objDB.GetField("Model", i).ToString();
+                carObj.year = objDB.GetField("Year", i).ToString();
+                carObj.type = objDB.GetField("Type", i).ToString();
+                carObj.pricePerDay = Convert.ToDecimal(objDB.GetField("PricePerDay", i));
+                carObj.availability = Convert.ToBoolean(objDB.GetField("Availability", i).ToString());
+                carObj.picture = objDB.GetField("Picture", i).ToString();
+            }
+
+            return carList;
+        }
+
+        // Web Method to change availability of car based on VIN
+        [WebMethod]
+        public void ChangeAvailability(string VIN)
+        {
+            DBConnect objDB = new DBConnect();
+            string strSQL = "SELECT Availability FROM Car WHERE VIN = '" + VIN + "'";
+            int recordCount = 0;
+            Boolean avail = false;
+            objDB.GetDataSet(strSQL, out recordCount);
+
+            if (recordCount > 0)
+            {
+                avail = Convert.ToBoolean(objDB.GetField("Availability", 0).ToString());
+
+                if (avail)
+                {
+                    strSQL = "UPDATE CAR SET Availability = false WHERE VIN = '" + VIN + "'";
+                }
+                else if (!avail)
+                {
+                    strSQL = "UPDATE CAR SET Availability = true WHERE VIN = '" + VIN + "'";
+                }
+                objDB.DoUpdate(strSQL);
+            }
+        }
+
     }
 }
