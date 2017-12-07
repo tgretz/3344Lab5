@@ -30,8 +30,12 @@ namespace Lab5
         public Boolean StoreCar(Car carObj)
         {
             DBConnect objDB = new DBConnect();
-            string strSQL = "INSERT INTO Car (VIN, Make, Model, Year, Type, PricePerDay, Availability, Picture) " +
-                            "VALUES ('" + carObj.VIN + "', '" + carObj.make + "', '" + carObj.model + "', '" + carObj.year + "', '" + carObj.type + "', '" + carObj.pricePerDay + "', '" + carObj.availability + "', '" + carObj.picture + "')";
+            // no pictures yet
+            //string strSQL = "INSERT INTO Car (VIN, Make, Model, Year, Type, PricePerDay, Availability, Picture) " +
+                         //   "VALUES ('" + carObj.VIN + "', '" + carObj.make + "', '" + carObj.model + "', '" + carObj.year + "', '" + carObj.type + "', '" + carObj.pricePerDay + "', '" + carObj.availability + "', '" + carObj.picture + "')";
+
+            string strSQL = "INSERT INTO Car (VIN, Make, Model, Year, Type, PricePerDay, Availability) " +
+                            "VALUES ('" + carObj.VIN + "', '" + carObj.make + "', '" + carObj.model + "', '" + carObj.year + "', '" + carObj.type + "', '" + carObj.pricePerDay + "', '" + carObj.availability + "')";
 
             //returns number of records affected by the INSERT statement//returns -1 if there was an error
             int result = objDB.DoUpdate(strSQL);
@@ -81,7 +85,6 @@ namespace Lab5
             //Car carObj = new Car();
             string strSQL = "SELECT * FROM Car WHERE Type = '" + Type + "'";
             int recordCount = 0;
-
             objDB.GetDataSet(strSQL, out recordCount);
 
             for (int i = 0; i < recordCount; i++)
@@ -94,9 +97,9 @@ namespace Lab5
                 carObj.type = objDB.GetField("Type", i).ToString();
                 carObj.pricePerDay = Convert.ToDecimal(objDB.GetField("PricePerDay", i));
                 carObj.availability = Convert.ToBoolean(objDB.GetField("Availability", i).ToString());
-                carObj.picture = objDB.GetField("Picture", i).ToString();
+                // no pictures yet
+                // carObj.picture = objDB.GetField("Picture", i).ToString();
             }
-
             return carList;
         }
 
@@ -116,11 +119,11 @@ namespace Lab5
 
                 if (avail)
                 {
-                    strSQL = "UPDATE CAR SET Availability = false WHERE VIN = '" + VIN + "'";
+                    strSQL = "UPDATE CAR SET Availability = 'false' WHERE VIN = '" + VIN + "'";
                 }
                 else if (!avail)
                 {
-                    strSQL = "UPDATE CAR SET Availability = true WHERE VIN = '" + VIN + "'";
+                    strSQL = "UPDATE CAR SET Availability = 'true' WHERE VIN = '" + VIN + "'";
                 }
                 objDB.DoUpdate(strSQL);
             }

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="StoreCar">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="carObj" type="tns:Car" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Car">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="VIN" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="make" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="model" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="year" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="type" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="pricePerDay" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="availability" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="picture" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="StoreCarResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="StoreCarResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCarByVIN">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VIN" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCarByVINResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCarByVINResult" type="tns:Car" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCarsByType">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCarsByTypeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCarsByTypeResult" type="tns:ArrayOfCar" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfCar">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Car" nillable="true" type="tns:Car" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ChangeAvailability">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VIN" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeAvailabilityResponse">
+        <s:complexType />
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="StoreCarSoapIn">
+    <wsdl:part name="parameters" element="tns:StoreCar" />
+  </wsdl:message>
+  <wsdl:message name="StoreCarSoapOut">
+    <wsdl:part name="parameters" element="tns:StoreCarResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCarByVINSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCarByVIN" />
+  </wsdl:message>
+  <wsdl:message name="GetCarByVINSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCarByVINResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCarsByTypeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCarsByType" />
+  </wsdl:message>
+  <wsdl:message name="GetCarsByTypeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCarsByTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangeAvailabilitySoapIn">
+    <wsdl:part name="parameters" element="tns:ChangeAvailability" />
+  </wsdl:message>
+  <wsdl:message name="ChangeAvailabilitySoapOut">
+    <wsdl:part name="parameters" element="tns:ChangeAvailabilityResponse" />
+  </wsdl:message>
+  <wsdl:portType name="CarServiceSoap">
+    <wsdl:operation name="StoreCar">
+      <wsdl:input message="tns:StoreCarSoapIn" />
+      <wsdl:output message="tns:StoreCarSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCarByVIN">
+      <wsdl:input message="tns:GetCarByVINSoapIn" />
+      <wsdl:output message="tns:GetCarByVINSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCarsByType">
+      <wsdl:input message="tns:GetCarsByTypeSoapIn" />
+      <wsdl:output message="tns:GetCarsByTypeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeAvailability">
+      <wsdl:input message="tns:ChangeAvailabilitySoapIn" />
+      <wsdl:output message="tns:ChangeAvailabilitySoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CarServiceSoap" type="tns:CarServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="StoreCar">
+      <soap:operation soapAction="http://tempuri.org/StoreCar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCarByVIN">
+      <soap:operation soapAction="http://tempuri.org/GetCarByVIN" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCarsByType">
+      <soap:operation soapAction="http://tempuri.org/GetCarsByType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeAvailability">
+      <soap:operation soapAction="http://tempuri.org/ChangeAvailability" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CarServiceSoap12" type="tns:CarServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="StoreCar">
+      <soap12:operation soapAction="http://tempuri.org/StoreCar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCarByVIN">
+      <soap12:operation soapAction="http://tempuri.org/GetCarByVIN" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCarsByType">
+      <soap12:operation soapAction="http://tempuri.org/GetCarsByType" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeAvailability">
+      <soap12:operation soapAction="http://tempuri.org/ChangeAvailability" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CarService">
+    <wsdl:port name="CarServiceSoap" binding="tns:CarServiceSoap">
+      <soap:address location="http://localhost:51235/CarService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="CarServiceSoap12" binding="tns:CarServiceSoap12">
+      <soap12:address location="http://localhost:51235/CarService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
