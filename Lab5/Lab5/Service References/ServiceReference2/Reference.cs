@@ -179,14 +179,14 @@ namespace Lab5.ServiceReference2 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/StoreCar", ReplyAction="*")]
         System.Threading.Tasks.Task<Lab5.ServiceReference2.StoreCarResponse> StoreCarAsync(Lab5.ServiceReference2.StoreCarRequest request);
         
-        // CODEGEN: Generating message contract since element name VIN from namespace http://tempuri.org/ is not marked nillable
+        // CODEGEN: Generating message contract since element name carObj from namespace http://tempuri.org/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetCarByVIN", ReplyAction="*")]
         Lab5.ServiceReference2.GetCarByVINResponse GetCarByVIN(Lab5.ServiceReference2.GetCarByVINRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetCarByVIN", ReplyAction="*")]
         System.Threading.Tasks.Task<Lab5.ServiceReference2.GetCarByVINResponse> GetCarByVINAsync(Lab5.ServiceReference2.GetCarByVINRequest request);
         
-        // CODEGEN: Generating message contract since element name Type from namespace http://tempuri.org/ is not marked nillable
+        // CODEGEN: Generating message contract since element name car from namespace http://tempuri.org/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetCarsByType", ReplyAction="*")]
         Lab5.ServiceReference2.GetCarsByTypeResponse GetCarsByType(Lab5.ServiceReference2.GetCarsByTypeRequest request);
         
@@ -293,13 +293,13 @@ namespace Lab5.ServiceReference2 {
     public partial class GetCarByVINRequestBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public string VIN;
+        public Lab5.ServiceReference2.Car carObj;
         
         public GetCarByVINRequestBody() {
         }
         
-        public GetCarByVINRequestBody(string VIN) {
-            this.VIN = VIN;
+        public GetCarByVINRequestBody(Lab5.ServiceReference2.Car carObj) {
+            this.carObj = carObj;
         }
     }
     
@@ -361,13 +361,13 @@ namespace Lab5.ServiceReference2 {
     public partial class GetCarsByTypeRequestBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public string Type;
+        public Lab5.ServiceReference2.Car car;
         
         public GetCarsByTypeRequestBody() {
         }
         
-        public GetCarsByTypeRequestBody(string Type) {
-            this.Type = Type;
+        public GetCarsByTypeRequestBody(Lab5.ServiceReference2.Car car) {
+            this.car = car;
         }
     }
     
@@ -523,10 +523,10 @@ namespace Lab5.ServiceReference2 {
             return base.Channel.GetCarByVIN(request);
         }
         
-        public Lab5.ServiceReference2.Car GetCarByVIN(string VIN) {
+        public Lab5.ServiceReference2.Car GetCarByVIN(Lab5.ServiceReference2.Car carObj) {
             Lab5.ServiceReference2.GetCarByVINRequest inValue = new Lab5.ServiceReference2.GetCarByVINRequest();
             inValue.Body = new Lab5.ServiceReference2.GetCarByVINRequestBody();
-            inValue.Body.VIN = VIN;
+            inValue.Body.carObj = carObj;
             Lab5.ServiceReference2.GetCarByVINResponse retVal = ((Lab5.ServiceReference2.CarServiceSoap)(this)).GetCarByVIN(inValue);
             return retVal.Body.GetCarByVINResult;
         }
@@ -536,10 +536,10 @@ namespace Lab5.ServiceReference2 {
             return base.Channel.GetCarByVINAsync(request);
         }
         
-        public System.Threading.Tasks.Task<Lab5.ServiceReference2.GetCarByVINResponse> GetCarByVINAsync(string VIN) {
+        public System.Threading.Tasks.Task<Lab5.ServiceReference2.GetCarByVINResponse> GetCarByVINAsync(Lab5.ServiceReference2.Car carObj) {
             Lab5.ServiceReference2.GetCarByVINRequest inValue = new Lab5.ServiceReference2.GetCarByVINRequest();
             inValue.Body = new Lab5.ServiceReference2.GetCarByVINRequestBody();
-            inValue.Body.VIN = VIN;
+            inValue.Body.carObj = carObj;
             return ((Lab5.ServiceReference2.CarServiceSoap)(this)).GetCarByVINAsync(inValue);
         }
         
@@ -548,10 +548,10 @@ namespace Lab5.ServiceReference2 {
             return base.Channel.GetCarsByType(request);
         }
         
-        public Lab5.ServiceReference2.Car[] GetCarsByType(string Type) {
+        public Lab5.ServiceReference2.Car[] GetCarsByType(Lab5.ServiceReference2.Car car) {
             Lab5.ServiceReference2.GetCarsByTypeRequest inValue = new Lab5.ServiceReference2.GetCarsByTypeRequest();
             inValue.Body = new Lab5.ServiceReference2.GetCarsByTypeRequestBody();
-            inValue.Body.Type = Type;
+            inValue.Body.car = car;
             Lab5.ServiceReference2.GetCarsByTypeResponse retVal = ((Lab5.ServiceReference2.CarServiceSoap)(this)).GetCarsByType(inValue);
             return retVal.Body.GetCarsByTypeResult;
         }
@@ -561,10 +561,10 @@ namespace Lab5.ServiceReference2 {
             return base.Channel.GetCarsByTypeAsync(request);
         }
         
-        public System.Threading.Tasks.Task<Lab5.ServiceReference2.GetCarsByTypeResponse> GetCarsByTypeAsync(string Type) {
+        public System.Threading.Tasks.Task<Lab5.ServiceReference2.GetCarsByTypeResponse> GetCarsByTypeAsync(Lab5.ServiceReference2.Car car) {
             Lab5.ServiceReference2.GetCarsByTypeRequest inValue = new Lab5.ServiceReference2.GetCarsByTypeRequest();
             inValue.Body = new Lab5.ServiceReference2.GetCarsByTypeRequestBody();
-            inValue.Body.Type = Type;
+            inValue.Body.car = car;
             return ((Lab5.ServiceReference2.CarServiceSoap)(this)).GetCarsByTypeAsync(inValue);
         }
         

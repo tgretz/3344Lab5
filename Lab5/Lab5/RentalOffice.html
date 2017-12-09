@@ -44,13 +44,22 @@
 </head>
 <body>
     <h1 style="text-align:center">T & H Car Rental</h1><br /><br />
-    
-    <!--Pops Open 'Add Car' Modal-->
-    <button id="addModal">Add New Car</button>
+
+    <!--Buttons-->
+    <button id="addModal">Add New Car</button><br /><br />
+    <button id="searchVin">Search By Vin</button><br /><br />
+    <button id="searchType">Search By Type</button><br /><br />
+    <br /><br />
+    <div id="Test"></div>
+
+
+
+
     <!--Add Car Modal-->
     <div id="addCarModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <span id="add" class="close">&times;</span>
+            <div id="display"></div>
             <table>
                 <tr>
                     <td>Enter Vin: </td>
@@ -81,28 +90,31 @@
                         <input id="storeCar" value="Store Car" type="button" />
                     </td>
                 </tr>
+                <tr></tr>
             </table>
+            <div id="displayStored"></div>
         </div>
     </div>
 
     <!--Add Car Modal Script-->
     <script>
-        var modal = document.getElementById('addCarModal');
+        var modalAdd = document.getElementById('addCarModal');
         var btnAddModal = document.getElementById("addModal");
         var span = document.getElementsByClassName("close")[0];
+
         // When the user clicks the button, open the modal
         btnAddModal.onclick = function () {
-            modal.style.display = "block";
+            modalAdd.style.display = "block";
         }
         // When the user clicks on x, close the modal
         span.onclick = function () {
-            modal.style.display = "none";
+            modalAdd.style.display = "none";
         }
 
 
         // Uses WebService to store car info in database
         $("#storeCar").click(function () {
-            
+
             var strURL = "CarService.asmx/StoreCar";    // URL of the Web Service followed by the name of the Web Method
             var Vin = $("#txtVin").val();
             var Make = $("#txtMake").val();
@@ -112,7 +124,7 @@
             var PricePerDay = $("#txtPricePerDay").val();
 
             // The input parameters names must match the Web Method parameter names.
-            // Create a JavaScript object with properties that have the same names 
+            // Create a JavaScript object with properties that have the same names
             // as the Web Method parameters, and assign the properties values coming from the form controls.
             var Car = new Object();
             Car.Vin = Vin;
@@ -129,16 +141,16 @@
 
             // Convert the JavaScript object into a JSON string (serialization).
             inputParams = JSON.stringify(inputParametersObject);
-            
+
             // Make an AJAX request and display the response in the appropriate div.
             $.ajax({
                 type: "POST",
                 url: strURL,
                 contentType: "application/json; charset=utf-8", // set the data type sent to the Web Service
-                dataType: "json",                               // set the data type expected from the Web Service                                 
-                data: inputParams,                              // send an empty JSON object (no input required).    
+                dataType: "json",                               // set the data type expected from the Web Service
+                data: inputParams,                              // send an empty JSON object (no input required).
                 success: function (data) {                      // set callback function used to update the page
-                    $("#display").text(data.d);                 // JQuery puts the object returned by the Web Method in data.d
+                    $("#displayStored").text("Car Successfully Added!");                 // JQuery puts the object returned by the Web Method in data.d
                 },
                 error: function (req, status, error) {          // sets the error callback function used when an error occurs.
                     alert("Error: " + req.responseText + " | " + status + " | " + error);
@@ -146,14 +158,158 @@
 
             }); //end of ajax method
             // close modal
-            modal.style.display = "none";
+            //modalAdd.style.display = "none";
         }); // end of click event
-
-        
-
-
-
     </script>
 
+    <!--Search Vin Modal-->
+    <div id="searchVinModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <table>
+                <tr>
+                    <td>Enter Vin: </td>
+                    <td><input id="txtVin2" type="text" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input id="submitVin" value="Search" type="button" />
+                    </td>
+                </tr>
+                <tr></tr>
+            </table>
+            <div id="displayVinSearch"></div>
+        </div>
+    </div>
+    <!--Search Vin Modal Script-->
+    <script>
+        var modalVin = document.getElementById('searchVinModal');
+        var btnSearchVinModal = document.getElementById("searchVin");
+        var span = document.getElementsByClassName("close")[1];
+        // When the user clicks the button, open the modal
+        btnSearchVinModal.onclick = function () {
+            modalVin.style.display = "block";
+        }
+        // When the user clicks on x, close the modal
+        span.onclick = function () {
+            modalVin.style.display = "none";
+        }
+
+
+        // Uses WebService to store car info in database
+        $("#submitVin").click(function () {
+
+            var strURL = "CarService.asmx/GetCarByVIN";    // URL of the Web Service followed by the name of the Web Method
+            var vin = $("#txtVin2").val();
+
+            // The input parameters names must match the Web Method parameter names.
+            // Create a JavaScript object with properties that have the same names
+            // as the Web Method parameters, and assign the properties values coming from the form controls.
+            var Car = new Object();
+            Car.Vin = vin;
+
+            var inputParametersObject = new Object();
+            inputParametersObject.carObj = Car;
+
+            // Convert the JavaScript object into a JSON string (serialization).
+            inputParams = JSON.stringify(inputParametersObject);
+
+            // Make an AJAX request and display the response in the appropriate div.
+            $.ajax({
+                type: "POST",
+                url: strURL,
+                contentType: "application/json; charset=utf-8", // set the data type sent to the Web Service
+                dataType: "json",                               // set the data type expected from the Web Service
+                data: inputParams,                              // send an empty JSON object (no input required).
+                success: function (data) {                      // set callback function used to update the page
+                    var Car = data.d;
+                    $("#displayVinSearch").html("<br><br>" + "Make: " + Car.make + "<br>" + "Model: " + Car.model + "<br>" + "Year: " + Car.year +
+                        "<br>" + "Type: " + Car.type + "<br>" + "Price Per Day: " + Car.pricePerDay + "<br>" + "Available: " + Car.availability);
+                },
+                error: function (req, status, error) {          // sets the error callback function used when an error occurs.
+                    alert("Error: " + req.responseText + " | " + status + " | " + error);
+                }
+
+            }); //end of ajax method
+            // close modal
+            //modalVin.style.display = "none";
+        }); // end of click event
+    </script>
+
+    <!--Search By Type Modal-->
+    <div id="searchByTypeModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <table>
+                <tr>
+                    <td>Enter Car Type(Suv, Convertible, Sedan, etc.): </td>
+                    <td><input id="txtType2" type="text" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input id="submitType" value="Search" type="button" />
+                    </td>
+                </tr>
+                <tr></tr>
+            </table>
+            <div id="displayTypeSearch"></div>
+        </div>
+    </div>
+
+    <!--Search Type Modal Script-->
+    <script>
+        var modalType = document.getElementById("searchByTypeModal");
+        var btnSearchTypeModal = document.getElementById("searchType");
+        var span = document.getElementsByClassName("close")[2];
+        // When the user clicks the button, open the modal
+        btnSearchTypeModal.onclick = function () {
+            modalType.style.display = "block";
+        }
+        // When the user clicks on x, close the modal
+        span.onclick = function () {
+            modalType.style.display = "none";
+        }
+
+
+        // Uses WebService to store car info in database
+        $("#submitType").click(function () {
+
+            var strURL = "CarService.asmx/GetCarsByType";    // URL of the Web Service followed by the name of the Web Method
+            var type = $("#txtType2").val();
+
+            // The input parameters names must match the Web Method parameter names.
+            // Create a JavaScript object with properties that have the same names
+            // as the Web Method parameters, and assign the properties values coming from the form controls.
+            var Car = new Object();
+            Car.Type = type;
+
+            var inputParametersObject = new Object();
+            inputParametersObject.carObj = Car;
+
+            // Convert the JavaScript object into a JSON string (serialization).
+            inputParams = JSON.stringify(inputParametersObject);
+
+            // Make an AJAX request and display the response in the appropriate div.
+            $.ajax({
+                type: "POST",
+                url: strURL,
+                contentType: "application/json; charset=utf-8", // set the data type sent to the Web Service
+                dataType: "json",                               // set the data type expected from the Web Service
+                data: inputParams,                              // send an empty JSON object (no input required).
+                success: function (data) {                      // set callback function used to update the page
+                    var cars = data.d;
+                    $.each(cars, function (index, car) {
+                        $("#displayTypeSearch").append("<p>".concat("Make: ", car.make, "<br>Model: ", car.model, "<br>Year: ", car.year, "<br>Type: ", car.type, "<br>Price Per Day: ", car.pricePerDay, "<br>Available: ", car.availability , "</p>"));
+                    });
+                },
+                error: function (req, status, error) {          // sets the error callback function used when an error occurs.
+                    alert("Error: " + req.responseText + " | " + status + " | " + error);
+                }
+
+            }); //end of ajax method
+            // close modal
+            //modalVin.style.display = "none";
+        }); // end of click event
+    </script>
 </body>
 </html>

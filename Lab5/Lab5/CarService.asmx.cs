@@ -51,11 +51,11 @@ namespace Lab5
         //Web Method to get all info for a Car by passing in its VIN
         //returns a Car Obj that contains all the information returned from the Query
         [WebMethod]
-        public Car GetCarByVIN(string VIN)
+        public Car GetCarByVIN(Car carObj)
         {
             DBConnect objDB = new DBConnect();
-            Car carObj = new Car();
-            string strSQL = "SELECT * FROM Car WHERE VIN = '" + VIN + "'";
+            string vin = carObj.VIN;
+            string strSQL = "SELECT * FROM Car WHERE VIN = '" + vin + "'";
             int recordCount = 0;
 
             objDB.GetDataSet(strSQL, out recordCount);
@@ -78,18 +78,19 @@ namespace Lab5
         //Web Method to get all cars by type
         //returns list of Car Objs that contain all the information returned from the Query
         [WebMethod]
-        public List<Car> GetCarsByType(string Type)
+        public List<Car> GetCarsByType(Car carObj)
         {
             DBConnect objDB = new DBConnect();
             List<Car> carList = new List<Car>();
+            string type = carObj.type;
             //Car carObj = new Car();
-            string strSQL = "SELECT * FROM Car WHERE Type = '" + Type + "'";
+            string strSQL = "SELECT * FROM Car WHERE Type = '" + type + "'";
             int recordCount = 0;
             objDB.GetDataSet(strSQL, out recordCount);
 
             for (int i = 0; i < recordCount; i++)
             {
-                Car carObj = new Car();
+                carObj = new Car();
                 carObj.VIN = objDB.GetField("VIN", i).ToString();
                 carObj.make = objDB.GetField("Make", i).ToString();
                 carObj.model = objDB.GetField("Model", i).ToString();
@@ -99,6 +100,7 @@ namespace Lab5
                 carObj.availability = Convert.ToBoolean(objDB.GetField("Availability", i).ToString());
                 // no pictures yet
                 // carObj.picture = objDB.GetField("Picture", i).ToString();
+                carList.Add(carObj);
             }
             return carList;
         }
