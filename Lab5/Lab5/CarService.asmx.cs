@@ -107,9 +107,10 @@ namespace Lab5
 
         // Web Method to change availability of car based on VIN
         [WebMethod]
-        public void ChangeAvailability(string VIN)
+        public void ChangeAvailability(Car carObj)
         {
             DBConnect objDB = new DBConnect();
+            string VIN = carObj.VIN;
             string strSQL = "SELECT Availability FROM Car WHERE VIN = '" + VIN + "'";
             int recordCount = 0;
             Boolean avail = false;
@@ -129,6 +130,26 @@ namespace Lab5
                 }
                 objDB.DoUpdate(strSQL);
             }
+        }
+
+        // Web Method to check if a car is rented/available 
+        [WebMethod]
+        public Boolean CheckAvailability(Car carObj)
+        {
+            DBConnect objDB = new DBConnect();
+            string VIN = carObj.VIN;
+            string strSQL = "SELECT Availability FROM Car WHERE VIN = '" + VIN + "'";
+            int recordCount = 0;
+            Boolean avail = false;
+            objDB.GetDataSet(strSQL, out recordCount);
+
+            //returns true if it's available, false if it's already rented
+            if (recordCount > 0)
+            {
+                avail = Convert.ToBoolean(objDB.GetField("Availability", 0).ToString());
+                return avail;
+            }
+            return false;
         }
 
     }

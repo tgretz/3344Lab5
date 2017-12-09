@@ -39,6 +39,10 @@
                 text-decoration: none;
                 cursor: pointer;
             }
+
+        body {
+            background-color: #94edf7;
+        }
     </style>
 
 </head>
@@ -179,9 +183,11 @@
                 <tr></tr>
             </table>
             <div id="displayVinSearch"></div>
+            <div id="displayRentButton"></div>
+            <div id="displaySuccessMessage"></div>
         </div>
     </div>
-    <!--Search Vin Modal Script-->
+    <!--Search Vin Modal/Show Rent or Return Button Script-->
     <script>
         var modalVin = document.getElementById('searchVinModal');
         var btnSearchVinModal = document.getElementById("searchVin");
@@ -196,7 +202,7 @@
         }
 
 
-        // Uses WebService to store car info in database
+        // Uses WebService to get a Car by its VIN
         $("#submitVin").click(function () {
 
             var strURL = "CarService.asmx/GetCarByVIN";    // URL of the Web Service followed by the name of the Web Method
@@ -231,9 +237,90 @@
                 }
 
             }); //end of ajax method
+        }); // end of click event for displaying Car info based on VIN
+
+        // Uses Web Service to check if car is available and display the appropriate button
+        $("#submitVin").click(function () {
+
+            var strURL = "CarService.asmx/CheckAvailability";    // URL of the Web Service followed by the name of the Web Method
+            var vin = $("#txtVin2").val();
+
+            // The input parameters names must match the Web Method parameter names.
+            // Create a JavaScript object with properties that have the same names
+            // as the Web Method parameters, and assign the properties values coming from the form controls.
+            var Car = new Object();
+            Car.Vin = vin;
+
+            var inputParametersObject = new Object();
+            inputParametersObject.carObj = Car;
+
+            // Convert the JavaScript object into a JSON string (serialization).
+            inputParams = JSON.stringify(inputParametersObject);
+
+            // Make an AJAX request and display the response in the appropriate div.
+            $.ajax({
+                type: "POST",
+                url: strURL,
+                contentType: "application/json; charset=utf-8", // set the data type sent to the Web Service
+                dataType: "json",                               // set the data type expected from the Web Service
+                data: inputParams,                              // send an empty JSON object (no input required).
+                success: function (data) {                      // set callback function used to update the page
+                    var result = data.d;
+                    if (result == true)
+                        $("#displayRentButton").html("<br /><button id='btnRentReturn'>Rent Car</button><br />");
+                    else
+                        $("#displayRentButton").html("<br /><button id='btnRentReturn'>Return Car</button><br />");
+                },
+                error: function (req, status, error) {          // sets the error callback function used when an error occurs.
+                    alert("Error: " + req.responseText + " | " + status + " | " + error);
+                }
+
+            }); //end of ajax method
+
             // close modal
             //modalVin.style.display = "none";
-        }); // end of click event
+        }); // end of click event for showing correct Rent or Return button
+    </script>
+
+    <!--Rent or Return Car script-->
+    <script>
+        // Uses Web Service Rent or Return a Car
+        $("#btnRentReturn").click(function () {
+
+            var strURL = "CarService.asmx/ChangeAvailability";    // URL of the Web Service followed by the name of the Web Method
+            var vin = $("#txtVin2").val();
+
+            // The input parameters names must match the Web Method parameter names.
+            // Create a JavaScript object with properties that have the same names
+            // as the Web Method parameters, and assign the properties values coming from the form controls.
+            var Car = new Object();
+            Car.Vin = vin;
+
+            var inputParametersObject = new Object();
+            inputParametersObject.carObj = Car;
+
+            // Convert the JavaScript object into a JSON string (serialization).
+            inputParams = JSON.stringify(inputParametersObject);
+
+            // Make an AJAX request and display the response in the appropriate div.
+            $.ajax({
+                type: "POST",
+                url: strURL,
+                contentType: "application/json; charset=utf-8", // set the data type sent to the Web Service
+                dataType: "json",                               // set the data type expected from the Web Service
+                data: inputParams,                              // send an empty JSON object (no input required).
+                success: function (data) {                      // set callback function used to update the page
+                    $("#displaySuccessMessage").text("Car availability changed!");
+                },
+                error: function (req, status, error) {          // sets the error callback function used when an error occurs.
+                    alert("Error: " + req.responseText + " | " + status + " | " + error);
+                }
+
+            }); //end of ajax method
+
+            // close modal
+            //modalVin.style.display = "none";
+        }); // end of click event for showing correct Rent or Return button
     </script>
 
     <!--Search By Type Modal-->
@@ -299,7 +386,7 @@
                 success: function (data) {                      // set callback function used to update the page
                     var cars = data.d;
                     $.each(cars, function (index, car) {
-                        $("#displayTypeSearch").append("<p>".concat("Make: ", car.make, "<br>Model: ", car.model, "<br>Year: ", car.year, "<br>Type: ", car.type, "<br>Price Per Day: ", car.pricePerDay, "<br>Available: ", car.availability , "</p>"));
+                        $("#displayTypeSearch").append("<p>".concat("Make: ", car.make, "<br>Model: ", car.model, "<br>Year: ", car.year, "<br>Type: ", car.type, "<br>Price Per Day: ", car.pricePerDay, "<br>Available: ", car.availability, "</p>"));
                     });
                 },
                 error: function (req, status, error) {          // sets the error callback function used when an error occurs.
