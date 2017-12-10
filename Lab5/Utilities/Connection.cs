@@ -11,10 +11,10 @@ namespace Utilities
     public class DBConnect
     {
         // from campus
-        //String SqlConnectString = "server=cis-mssql1.temple.edu;Database=FA17_3344_tuf10315;User id=tuf10315;Password=Ahm8eing";
+        String SqlConnectString = "server=cis-mssql1.temple.edu;Database=FA17_3344_tuf10315;User id=tuf10315;Password=Ahm8eing";
 
         // from tunnel
-        String SqlConnectString = "server=127.0.0.1,5555;Database=FA17_3344_tuf10315;User id=tuf10315;Password=Ahm8eing";
+        //String SqlConnectString = "server=127.0.0.1,5555;Database=FA17_3344_tuf10315;User id=tuf10315;Password=Ahm8eing";
 
         SqlConnection myConnectionSql;
         SqlCommand objCmd;
