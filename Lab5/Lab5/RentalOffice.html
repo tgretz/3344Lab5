@@ -4,55 +4,25 @@
     <title>T & H Car Rental Service</title>
     <meta charset="utf-8" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
-    <style>
-        .modal {
-            display: none;
-            position: relative;
-            z-index: 1;
-            padding-top: 100px;
-            left: 0;
-            top: 0;
-            width: 50%;
-            height: 30%;
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            height: 80%;
-        }
-
-        .close {
-            color: #aaaaaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-            .close:hover,
-            .close:focus {
-                color: #000;
-                text-decoration: none;
-                cursor: pointer;
-            }
-
-        body {
-            background-color: #94edf7;
-        }
-    </style>
-
+    <link rel="stylesheet" type="text/css" href="StyleSheet1.css">
 </head>
+
+
 <body>
     <h1 style="text-align:center">T & H Car Rental</h1><br /><br />
 
     <!--Buttons-->
-    <button id="addModal">Add New Car</button><br /><br />
-    <button id="searchVin">Search By Vin</button><br /><br />
-    <button id="searchType">Search By Type</button><br /><br />
+    <div class="infoContainer">
+        <button id="addModal">Add New Car</button><br /><br />
+    </div>
+    <div class="infoContainer">
+
+        <button id="searchVin">Search By Vin</button><br /><br />
+    </div>
+    <div class="infoContainer">
+
+        <button id="searchType">Search By Type</button><br /><br />
+    </div>
     <br /><br />
     <div id="Test"></div>
 
@@ -83,7 +53,15 @@
                 </tr>
                 <tr>
                     <td>Enter Type: </td>
-                    <td><input id="txtType" type="text" /></td>
+                    <td>
+                        <!--<input id="txtType" type="text" />-->
+                        <select id="txtType">
+                            <option value="Convertible">Convertible</option>
+                            <option value="Sedan">Sedan</option>
+                            <option value="Suv">Suv</option>
+                            <option value="Truck">Truck</option>                          
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td>Enter Price Per Day: </td>
@@ -267,9 +245,10 @@
                 success: function (data) {                      // set callback function used to update the page
                     var result = data.d;
                     if (result == true)
-                        $("#displayRentButton").html("<br /><button id='btnRentReturn'>Rent Car</button><br />");
+                        $("#displayRentButton").html("<br /><input id=\"btnRentReturn\" value=\"Rent Car\" type=\"button\" />");
                     else
-                        $("#displayRentButton").html("<br /><button id='btnRentReturn'>Return Car</button><br />");
+                        $("#displayRentButton").html("<br /><input id=\"btnRentReturn\" value=\"Return Car\" type=\"button\" />");
+
                 },
                 error: function (req, status, error) {          // sets the error callback function used when an error occurs.
                     alert("Error: " + req.responseText + " | " + status + " | " + error);
@@ -284,9 +263,9 @@
 
     <!--Rent or Return Car script-->
     <script>
-        // Uses Web Service Rent or Return a Car
+        // Uses Web Service Rent or Return a Car{
         $("#btnRentReturn").click(function () {
-
+            alert("CLicked!!!");
             var strURL = "CarService.asmx/ChangeAvailability";    // URL of the Web Service followed by the name of the Web Method
             var vin = $("#txtVin2").val();
 
@@ -329,8 +308,16 @@
             <span class="close">&times;</span>
             <table>
                 <tr>
-                    <td>Enter Car Type(Suv, Convertible, Sedan, etc.): </td>
-                    <td><input id="txtType2" type="text" /></td>
+                    <td>Select Car Type </td>
+                    <td>
+                        <select id="txtType2">
+                            <option value="Convertible">Convertible</option>
+                            <option value="Sedan">Sedan</option>
+                            <option value="Suv">Suv</option>
+                            <option value="Truck">Truck</option>
+                        </select>
+                        
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -386,7 +373,7 @@
                 success: function (data) {                      // set callback function used to update the page
                     var cars = data.d;
                     $.each(cars, function (index, car) {
-                        $("#displayTypeSearch").append("<p>".concat("Make: ", car.make, "<br>Model: ", car.model, "<br>Year: ", car.year, "<br>Type: ", car.type, "<br>Price Per Day: ", car.pricePerDay, "<br>Available: ", car.availability, "</p>"));
+                        $("#displayTypeSearch").append("<p>".concat("Vin: ", car.VIN, "<br>Make: ", car.make, "<br>Model: ", car.model, "<br>Year: ", car.year, "<br>Type: ", car.type, "<br>Price Per Day: ", car.pricePerDay, "<br>Available: ", car.availability, "</p>"));
                     });
                 },
                 error: function (req, status, error) {          // sets the error callback function used when an error occurs.
