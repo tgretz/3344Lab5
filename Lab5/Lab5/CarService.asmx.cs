@@ -31,11 +31,11 @@ namespace Lab5
         {
             DBConnect objDB = new DBConnect();
             // no pictures yet
-            //string strSQL = "INSERT INTO Car (VIN, Make, Model, Year, Type, PricePerDay, Availability, Picture) " +
-                         //   "VALUES ('" + carObj.VIN + "', '" + carObj.make + "', '" + carObj.model + "', '" + carObj.year + "', '" + carObj.type + "', '" + carObj.pricePerDay + "', '" + carObj.availability + "', '" + carObj.picture + "')";
+            string strSQL = "INSERT INTO Car (VIN, Make, Model, Year, Type, PricePerDay, Availability, Picture) " +
+                            "VALUES ('" + carObj.VIN + "', '" + carObj.make + "', '" + carObj.model + "', '" + carObj.year + "', '" + carObj.type + "', '" + carObj.pricePerDay + "', '" + carObj.availability + "', '" + carObj.picture + "')";
 
-            string strSQL = "INSERT INTO Car (VIN, Make, Model, Year, Type, PricePerDay, Availability) " +
-                            "VALUES ('" + carObj.VIN + "', '" + carObj.make + "', '" + carObj.model + "', '" + carObj.year + "', '" + carObj.type + "', '" + carObj.pricePerDay + "', '" + carObj.availability + "')";
+            //string strSQL = "INSERT INTO Car (VIN, Make, Model, Year, Type, PricePerDay, Availability) " +
+                         //   "VALUES ('" + carObj.VIN + "', '" + carObj.make + "', '" + carObj.model + "', '" + carObj.year + "', '" + carObj.type + "', '" + carObj.pricePerDay + "', '" + carObj.availability + "')";
 
             //returns number of records affected by the INSERT statement//returns -1 if there was an error
             int result = objDB.DoUpdate(strSQL);
@@ -98,8 +98,7 @@ namespace Lab5
                 carObj.type = objDB.GetField("Type", i).ToString();
                 carObj.pricePerDay = Convert.ToDecimal(objDB.GetField("PricePerDay", i));
                 carObj.availability = Convert.ToBoolean(objDB.GetField("Availability", i).ToString());
-                // no pictures yet
-                // carObj.picture = objDB.GetField("Picture", i).ToString();
+                carObj.picture = objDB.GetField("Picture", i).ToString();
                 carList.Add(carObj);
             }
             return carList;

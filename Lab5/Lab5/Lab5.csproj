@@ -68,6 +68,16 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\1976YugoJabroni.jpg" />
+    <Content Include="Images\2003NissanPathFinder.png" />
+    <Content Include="Images\2004FordExplorer.png" />
+    <Content Include="Images\2007NissanAltima.png" />
+    <Content Include="Images\2010SuburuForester.jpg" />
+    <Content Include="Images\2014HondaPilot.jpg" />
+    <Content Include="Images\2014MazdaMiata.jpg" />
+    <Content Include="Images\2015AcuraTlx.jpg" />
+    <Content Include="Images\2016FordF150.jpg" />
+    <Content Include="Images\2017HondaAccord.jpg" />
     <Content Include="packages.config" />
     <None Include="Service References\ServiceReference2\CarService.wsdl" />
     <Content Include="Service References\ServiceReference2\Lab5.ServiceReference2.Car.datasource">
@@ -83,6 +93,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <Content Include="Service References\ServiceReference2\Lab5.ServiceReference2.StoreCarResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\ServiceReference2\Lab5.ServiceReference2.CheckAvailabilityResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Web.Debug.config">

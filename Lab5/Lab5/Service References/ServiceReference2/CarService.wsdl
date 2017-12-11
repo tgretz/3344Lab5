@@ -45,7 +45,7 @@
       <s:element name="GetCarsByType">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="car" type="tns:Car" />
+            <s:element minOccurs="0" maxOccurs="1" name="carObj" type="tns:Car" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -64,12 +64,26 @@
       <s:element name="ChangeAvailability">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="VIN" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="carObj" type="tns:Car" />
           </s:sequence>
         </s:complexType>
       </s:element>
       <s:element name="ChangeAvailabilityResponse">
         <s:complexType />
+      </s:element>
+      <s:element name="CheckAvailability">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="carObj" type="tns:Car" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckAvailabilityResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CheckAvailabilityResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
       </s:element>
     </s:schema>
   </wsdl:types>
@@ -97,6 +111,12 @@
   <wsdl:message name="ChangeAvailabilitySoapOut">
     <wsdl:part name="parameters" element="tns:ChangeAvailabilityResponse" />
   </wsdl:message>
+  <wsdl:message name="CheckAvailabilitySoapIn">
+    <wsdl:part name="parameters" element="tns:CheckAvailability" />
+  </wsdl:message>
+  <wsdl:message name="CheckAvailabilitySoapOut">
+    <wsdl:part name="parameters" element="tns:CheckAvailabilityResponse" />
+  </wsdl:message>
   <wsdl:portType name="CarServiceSoap">
     <wsdl:operation name="StoreCar">
       <wsdl:input message="tns:StoreCarSoapIn" />
@@ -113,6 +133,10 @@
     <wsdl:operation name="ChangeAvailability">
       <wsdl:input message="tns:ChangeAvailabilitySoapIn" />
       <wsdl:output message="tns:ChangeAvailabilitySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckAvailability">
+      <wsdl:input message="tns:CheckAvailabilitySoapIn" />
+      <wsdl:output message="tns:CheckAvailabilitySoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="CarServiceSoap" type="tns:CarServiceSoap">
@@ -153,6 +177,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="CheckAvailability">
+      <soap:operation soapAction="http://tempuri.org/CheckAvailability" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="CarServiceSoap12" type="tns:CarServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -185,6 +218,15 @@
     </wsdl:operation>
     <wsdl:operation name="ChangeAvailability">
       <soap12:operation soapAction="http://tempuri.org/ChangeAvailability" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckAvailability">
+      <soap12:operation soapAction="http://tempuri.org/CheckAvailability" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

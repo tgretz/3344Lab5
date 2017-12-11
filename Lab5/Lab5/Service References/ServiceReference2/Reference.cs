@@ -186,19 +186,26 @@ namespace Lab5.ServiceReference2 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetCarByVIN", ReplyAction="*")]
         System.Threading.Tasks.Task<Lab5.ServiceReference2.GetCarByVINResponse> GetCarByVINAsync(Lab5.ServiceReference2.GetCarByVINRequest request);
         
-        // CODEGEN: Generating message contract since element name car from namespace http://tempuri.org/ is not marked nillable
+        // CODEGEN: Generating message contract since element name carObj from namespace http://tempuri.org/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetCarsByType", ReplyAction="*")]
         Lab5.ServiceReference2.GetCarsByTypeResponse GetCarsByType(Lab5.ServiceReference2.GetCarsByTypeRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/GetCarsByType", ReplyAction="*")]
         System.Threading.Tasks.Task<Lab5.ServiceReference2.GetCarsByTypeResponse> GetCarsByTypeAsync(Lab5.ServiceReference2.GetCarsByTypeRequest request);
         
-        // CODEGEN: Generating message contract since element name VIN from namespace http://tempuri.org/ is not marked nillable
+        // CODEGEN: Generating message contract since element name carObj from namespace http://tempuri.org/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ChangeAvailability", ReplyAction="*")]
         Lab5.ServiceReference2.ChangeAvailabilityResponse ChangeAvailability(Lab5.ServiceReference2.ChangeAvailabilityRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ChangeAvailability", ReplyAction="*")]
         System.Threading.Tasks.Task<Lab5.ServiceReference2.ChangeAvailabilityResponse> ChangeAvailabilityAsync(Lab5.ServiceReference2.ChangeAvailabilityRequest request);
+        
+        // CODEGEN: Generating message contract since element name carObj from namespace http://tempuri.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/CheckAvailability", ReplyAction="*")]
+        Lab5.ServiceReference2.CheckAvailabilityResponse CheckAvailability(Lab5.ServiceReference2.CheckAvailabilityRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/CheckAvailability", ReplyAction="*")]
+        System.Threading.Tasks.Task<Lab5.ServiceReference2.CheckAvailabilityResponse> CheckAvailabilityAsync(Lab5.ServiceReference2.CheckAvailabilityRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -361,13 +368,13 @@ namespace Lab5.ServiceReference2 {
     public partial class GetCarsByTypeRequestBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public Lab5.ServiceReference2.Car car;
+        public Lab5.ServiceReference2.Car carObj;
         
         public GetCarsByTypeRequestBody() {
         }
         
-        public GetCarsByTypeRequestBody(Lab5.ServiceReference2.Car car) {
-            this.car = car;
+        public GetCarsByTypeRequestBody(Lab5.ServiceReference2.Car carObj) {
+            this.carObj = carObj;
         }
     }
     
@@ -429,13 +436,13 @@ namespace Lab5.ServiceReference2 {
     public partial class ChangeAvailabilityRequestBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public string VIN;
+        public Lab5.ServiceReference2.Car carObj;
         
         public ChangeAvailabilityRequestBody() {
         }
         
-        public ChangeAvailabilityRequestBody(string VIN) {
-            this.VIN = VIN;
+        public ChangeAvailabilityRequestBody(Lab5.ServiceReference2.Car carObj) {
+            this.carObj = carObj;
         }
     }
     
@@ -463,6 +470,74 @@ namespace Lab5.ServiceReference2 {
     public partial class ChangeAvailabilityResponseBody {
         
         public ChangeAvailabilityResponseBody() {
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class CheckAvailabilityRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="CheckAvailability", Namespace="http://tempuri.org/", Order=0)]
+        public Lab5.ServiceReference2.CheckAvailabilityRequestBody Body;
+        
+        public CheckAvailabilityRequest() {
+        }
+        
+        public CheckAvailabilityRequest(Lab5.ServiceReference2.CheckAvailabilityRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class CheckAvailabilityRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public Lab5.ServiceReference2.Car carObj;
+        
+        public CheckAvailabilityRequestBody() {
+        }
+        
+        public CheckAvailabilityRequestBody(Lab5.ServiceReference2.Car carObj) {
+            this.carObj = carObj;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class CheckAvailabilityResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="CheckAvailabilityResponse", Namespace="http://tempuri.org/", Order=0)]
+        public Lab5.ServiceReference2.CheckAvailabilityResponseBody Body;
+        
+        public CheckAvailabilityResponse() {
+        }
+        
+        public CheckAvailabilityResponse(Lab5.ServiceReference2.CheckAvailabilityResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class CheckAvailabilityResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public bool CheckAvailabilityResult;
+        
+        public CheckAvailabilityResponseBody() {
+        }
+        
+        public CheckAvailabilityResponseBody(bool CheckAvailabilityResult) {
+            this.CheckAvailabilityResult = CheckAvailabilityResult;
         }
     }
     
@@ -548,10 +623,10 @@ namespace Lab5.ServiceReference2 {
             return base.Channel.GetCarsByType(request);
         }
         
-        public Lab5.ServiceReference2.Car[] GetCarsByType(Lab5.ServiceReference2.Car car) {
+        public Lab5.ServiceReference2.Car[] GetCarsByType(Lab5.ServiceReference2.Car carObj) {
             Lab5.ServiceReference2.GetCarsByTypeRequest inValue = new Lab5.ServiceReference2.GetCarsByTypeRequest();
             inValue.Body = new Lab5.ServiceReference2.GetCarsByTypeRequestBody();
-            inValue.Body.car = car;
+            inValue.Body.carObj = carObj;
             Lab5.ServiceReference2.GetCarsByTypeResponse retVal = ((Lab5.ServiceReference2.CarServiceSoap)(this)).GetCarsByType(inValue);
             return retVal.Body.GetCarsByTypeResult;
         }
@@ -561,10 +636,10 @@ namespace Lab5.ServiceReference2 {
             return base.Channel.GetCarsByTypeAsync(request);
         }
         
-        public System.Threading.Tasks.Task<Lab5.ServiceReference2.GetCarsByTypeResponse> GetCarsByTypeAsync(Lab5.ServiceReference2.Car car) {
+        public System.Threading.Tasks.Task<Lab5.ServiceReference2.GetCarsByTypeResponse> GetCarsByTypeAsync(Lab5.ServiceReference2.Car carObj) {
             Lab5.ServiceReference2.GetCarsByTypeRequest inValue = new Lab5.ServiceReference2.GetCarsByTypeRequest();
             inValue.Body = new Lab5.ServiceReference2.GetCarsByTypeRequestBody();
-            inValue.Body.car = car;
+            inValue.Body.carObj = carObj;
             return ((Lab5.ServiceReference2.CarServiceSoap)(this)).GetCarsByTypeAsync(inValue);
         }
         
@@ -573,10 +648,10 @@ namespace Lab5.ServiceReference2 {
             return base.Channel.ChangeAvailability(request);
         }
         
-        public void ChangeAvailability(string VIN) {
+        public void ChangeAvailability(Lab5.ServiceReference2.Car carObj) {
             Lab5.ServiceReference2.ChangeAvailabilityRequest inValue = new Lab5.ServiceReference2.ChangeAvailabilityRequest();
             inValue.Body = new Lab5.ServiceReference2.ChangeAvailabilityRequestBody();
-            inValue.Body.VIN = VIN;
+            inValue.Body.carObj = carObj;
             Lab5.ServiceReference2.ChangeAvailabilityResponse retVal = ((Lab5.ServiceReference2.CarServiceSoap)(this)).ChangeAvailability(inValue);
         }
         
@@ -585,11 +660,36 @@ namespace Lab5.ServiceReference2 {
             return base.Channel.ChangeAvailabilityAsync(request);
         }
         
-        public System.Threading.Tasks.Task<Lab5.ServiceReference2.ChangeAvailabilityResponse> ChangeAvailabilityAsync(string VIN) {
+        public System.Threading.Tasks.Task<Lab5.ServiceReference2.ChangeAvailabilityResponse> ChangeAvailabilityAsync(Lab5.ServiceReference2.Car carObj) {
             Lab5.ServiceReference2.ChangeAvailabilityRequest inValue = new Lab5.ServiceReference2.ChangeAvailabilityRequest();
             inValue.Body = new Lab5.ServiceReference2.ChangeAvailabilityRequestBody();
-            inValue.Body.VIN = VIN;
+            inValue.Body.carObj = carObj;
             return ((Lab5.ServiceReference2.CarServiceSoap)(this)).ChangeAvailabilityAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Lab5.ServiceReference2.CheckAvailabilityResponse Lab5.ServiceReference2.CarServiceSoap.CheckAvailability(Lab5.ServiceReference2.CheckAvailabilityRequest request) {
+            return base.Channel.CheckAvailability(request);
+        }
+        
+        public bool CheckAvailability(Lab5.ServiceReference2.Car carObj) {
+            Lab5.ServiceReference2.CheckAvailabilityRequest inValue = new Lab5.ServiceReference2.CheckAvailabilityRequest();
+            inValue.Body = new Lab5.ServiceReference2.CheckAvailabilityRequestBody();
+            inValue.Body.carObj = carObj;
+            Lab5.ServiceReference2.CheckAvailabilityResponse retVal = ((Lab5.ServiceReference2.CarServiceSoap)(this)).CheckAvailability(inValue);
+            return retVal.Body.CheckAvailabilityResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<Lab5.ServiceReference2.CheckAvailabilityResponse> Lab5.ServiceReference2.CarServiceSoap.CheckAvailabilityAsync(Lab5.ServiceReference2.CheckAvailabilityRequest request) {
+            return base.Channel.CheckAvailabilityAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<Lab5.ServiceReference2.CheckAvailabilityResponse> CheckAvailabilityAsync(Lab5.ServiceReference2.Car carObj) {
+            Lab5.ServiceReference2.CheckAvailabilityRequest inValue = new Lab5.ServiceReference2.CheckAvailabilityRequest();
+            inValue.Body = new Lab5.ServiceReference2.CheckAvailabilityRequestBody();
+            inValue.Body.carObj = carObj;
+            return ((Lab5.ServiceReference2.CarServiceSoap)(this)).CheckAvailabilityAsync(inValue);
         }
     }
 }
